@@ -1,0 +1,33 @@
+<div class="variantstockwrapper"></div>
+
+
+<script>
+var variantinventories = [ {% for variant in product.variants %} { "id": {{ variant.id }}, "stock": {{ variant.inventory_quantity }},"policy":"{{ variant.inventory_policy }}" }, {% endfor %} ];
+</script>
+
+{% schema %}
+  {
+    "name": "Low Stock Counter",    
+    "target": "section", 
+    "templates": ["product"],    
+    "javascript": "stock.js", 
+    "settings": [
+        { "label": "Option Selector", "id": "optionselector", "type": "text", "info": "Variant swatches / Dropdown selector" },
+        { "label": "Variant Selector", "id": "variantselector", "type": "text", "default":"[name=id]", "info": "[name=id] Selector" }     
+    ]
+  }
+{% endschema %}
+
+<script>
+  var stockselectclass, stockVarSelector;
+{% if block.settings.optionselector != blank %}
+  stockselectclass = '{{ block.settings.optionselector }}';
+{% else %}
+  stockselectclass = '.product-form__input input, .single-option-selector, .single-option-selector__radio';
+{% endif %}
+{% if block.settings.variantselector != blank %}
+  stockVarSelector = '{{ block.settings.variantselector }}';
+{% else %}
+  stockVarSelector = '[name=id]';
+{% endif %}
+</script>

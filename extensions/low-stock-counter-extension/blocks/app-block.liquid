@@ -1,0 +1,39 @@
+<style>
+.variantstockwrapper {
+  color: {{ block.settings.textcolor }};
+} 
+.counterwrapper {
+  color: {{ block.settings.numbercolor }};
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Low Stock Counter",
+    "target": "body",    
+    "stylesheet": "stock.css",
+    "javascript": "stock.js",
+    "settings": [
+        { "label": "Text Color", "id": "textcolor", "type": "color", "default": "#000000" },
+        { "label": "Number Color", "id": "numbercolor", "type": "color", "default": "#000000" },       
+        { "label": "Text Before Count", "id": "textbeforecount", "type": "text" },
+        { "label": "Text After Count", "id": "textaftercount", "type": "text" },
+        { "label": "Show stock data less than", "id": "counterrange", "type": "range", "min": 5, "max": 100, "step": 5, "default": 10 }      
+    ]
+  }
+{% endschema %}
+
+<script>
+  var textbeforecount, textaftercount;
+{% if block.settings.textbeforecount != blank %}
+  textbeforecount = '{{ block.settings.textbeforecount }}';
+{% else %}
+  textbeforecount = 'Stock is';
+{% endif %}
+{% if block.settings.textaftercount != blank %}
+  textaftercount = '{{ block.settings.textaftercount }}';
+{% else %}
+  textaftercount = '';
+{% endif %}
+var counterrange = '{{ block.settings.counterrange }}';
+</script>
